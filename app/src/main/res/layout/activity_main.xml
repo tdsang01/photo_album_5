@@ -10,13 +10,13 @@
 
     <Button
         android:id="@+id/button_image_sd_card"
-        android:layout_width="@dimen/button_weight_get_image"
+        android:layout_width="@dimen/button_width_get_image"
         android:layout_height="wrap_content"
         android:text="@string/button_from_sd_card"/>
 
     <Button
         android:id="@+id/button_image_capture"
-        android:layout_width="@dimen/button_weight_get_image"
+        android:layout_width="@dimen/button_width_get_image"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/button_margin_top_get_image"
         android:text="@string/button_capture_image"/>

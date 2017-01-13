@@ -7,14 +7,18 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-
 import com.framgia.photoalbum.R;
 import com.framgia.photoalbum.data.model.ConstantManager;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import static com.framgia.photoalbum.data.model.ConstantManager.REQUEST_TAKE_IMAGE;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private Button mGetImageSDCardButton, mGetImageCaptureButton;
+public class MainActivity extends AppCompatActivity {
+    @BindView(R.id.button_image_sd_card)
+    Button mGetImageSDCardButton;
+    @BindView(R.id.button_image_capture)
+    Button mGetImageCaptureButton;
     private Bitmap mImageBitmap;
 
     @Override
@@ -22,24 +26,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle(R.string.title_choice_a_image);
-        mGetImageSDCardButton = (Button) findViewById(R.id.button_image_sd_card);
-        mGetImageCaptureButton = (Button) findViewById(R.id.button_image_capture);
-        mGetImageSDCardButton.setOnClickListener(this);
-        mGetImageCaptureButton.setOnClickListener(this);
+        ButterKnife.bind(this);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.button_image_sd_card:
-                // TODO Get image from SD Card
-                break;
-            case R.id.button_image_capture:
-                captureImage();
-                break;
-            default:
-                break;
-        }
+    public void getSDCardImages() {
+        Intent sdCardIntent = new Intent(MainActivity.this, ImagesActivity.class);
+        startActivity(sdCardIntent);
     }
 
     public void captureImage(){
@@ -54,6 +46,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(requestCode == REQUEST_TAKE_IMAGE && resultCode == RESULT_OK){
             Bundle extras = data.getExtras();
             mImageBitmap = (Bitmap) extras.get(ConstantManager.ARGUMENT_GET_IMAGE_BITMAP);
+        }
+    }
+
+    @OnClick({R.id.button_image_sd_card, R.id.button_image_capture})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.button_image_sd_card:
+                getSDCardImages();
+                break;
+            case R.id.button_image_capture:
+                captureImage();
+                break;
+            default:
+                break;
         }
     }
 }
