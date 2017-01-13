@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">PhotoAlbum</string>
+    <string name="title_choice_a_image">Choice Image</string>
+    <string name="button_from_sd_card">From SD Card</string>
+    <string name="button_capture_image">Capture Image</string>
 </resources>
