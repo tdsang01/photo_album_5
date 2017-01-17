@@ -3,4 +3,5 @@
     <string name="title_choice_a_image">Choice Image</string>
     <string name="button_from_sd_card">From SD Card</string>
     <string name="button_capture_image">Capture Image</string>
+    <string name="activity_title_edit_image">Edit Image</string>
 </resources>
