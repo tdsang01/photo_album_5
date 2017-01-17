@@ -5,4 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="color_green">#4CAF50</color>
     <color name="color_green_white">#81C784</color>
+    <color name="color_background_edit_image_functions">#bae0dc</color>
+    <color name="color_layout_item_edit_iamge">#d50404</color>
 </resources>

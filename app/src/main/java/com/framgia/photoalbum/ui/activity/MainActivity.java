@@ -7,11 +7,14 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+
 import com.framgia.photoalbum.R;
 import com.framgia.photoalbum.data.model.ConstantManager;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 import static com.framgia.photoalbum.data.model.ConstantManager.REQUEST_TAKE_IMAGE;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,18 +37,19 @@ public class MainActivity extends AppCompatActivity {
         startActivity(sdCardIntent);
     }
 
-    public void captureImage(){
+    public void captureImage() {
         Intent capImg = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if(capImg.resolveActivity(getPackageManager()) != null){
+        if (capImg.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(capImg, ConstantManager.REQUEST_TAKE_IMAGE);
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == REQUEST_TAKE_IMAGE && resultCode == RESULT_OK){
+        if (requestCode == REQUEST_TAKE_IMAGE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             mImageBitmap = (Bitmap) extras.get(ConstantManager.ARGUMENT_GET_IMAGE_BITMAP);
+            moveToEditImageFunctionsActivity(mImageBitmap);
         }
     }
 
@@ -61,5 +65,11 @@ public class MainActivity extends AppCompatActivity {
             default:
                 break;
         }
+    }
+
+    private void moveToEditImageFunctionsActivity(Bitmap imageBitmap) {
+        Intent i = new Intent(getApplicationContext(), EditImageFunctionsActivity.class);
+        i.putExtra(ConstantManager.ARGUMENT_PUT_IMAGE_INTENT, imageBitmap);
+        startActivity(i);
     }
 }

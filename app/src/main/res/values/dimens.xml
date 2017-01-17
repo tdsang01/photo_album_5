@@ -9,4 +9,7 @@
     <dimen name="card_view_text_size">20sp</dimen>
     <dimen name="card_view_corner_radius">6dp</dimen>
     <dimen name="card_view_margin_bottom">16dp</dimen>
+    <dimen name="image_size_width">300dp</dimen>
+    <dimen name="image_size_height">200dp</dimen>
+    <dimen name="recyclerview_margin_bottom">15dp</dimen>
 </resources>
