@@ -1,9 +1,9 @@
 package com.framgia.photoalbum.ui.activity;
 
-import android.net.Uri;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,10 +12,12 @@ import android.widget.Toast;
 
 import com.framgia.photoalbum.R;
 import com.framgia.photoalbum.data.local.SDCardReader;
+import com.framgia.photoalbum.data.model.ConstantManager;
 import com.framgia.photoalbum.data.model.ImageInfo;
 import com.framgia.photoalbum.ui.adapter.ImagesAdapter;
 import com.framgia.photoalbum.ui.interactor.OnSelectedListener;
-import java.io.File;
+
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import butterknife.BindView;
@@ -25,10 +27,10 @@ import butterknife.ButterKnife;
  * Created by trungnguyens93gmail.com on 1/13/17.
  */
 public class ImagesActivity extends AppCompatActivity implements OnSelectedListener {
+    private static final int NUM_COLUMN_OF_ROW_RECYCLE_VIEW = 2;
     @BindView(R.id.recycle_images)
     RecyclerView mImagesRecyclerView;
     private List<ImageInfo> mImages;
-    private static final int NUM_COLUMN_OF_ROW_RECYCLE_VIEW = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,8 @@ public class ImagesActivity extends AppCompatActivity implements OnSelectedListe
         setTitle(R.string.title_choice_a_image);
         setActionBar();
         mImagesRecyclerView.setHasFixedSize(true);
-        mImagesRecyclerView.setLayoutManager(new GridLayoutManager(ImagesActivity.this, NUM_COLUMN_OF_ROW_RECYCLE_VIEW));
+        mImagesRecyclerView.setLayoutManager(
+            new GridLayoutManager(ImagesActivity.this, NUM_COLUMN_OF_ROW_RECYCLE_VIEW));
         mImages = SDCardReader.getAllImageFile(this);
         mImagesRecyclerView.setAdapter(new ImagesAdapter(getApplicationContext(), mImages,
             this));
@@ -62,7 +65,17 @@ public class ImagesActivity extends AppCompatActivity implements OnSelectedListe
 
     @Override
     public void onImageSelect(ImageInfo imageInfo) {
-        // TODO Go to Custom Image Activity
-        // Waiting for the custom image activity
+        Bitmap bitmapImage = BitmapFactory.decodeFile(imageInfo.getPath());
+        if (bitmapImage != null) {
+            ByteArrayOutputStream bs = new ByteArrayOutputStream();
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, ConstantManager.QUALYTY_IMAGE, bs);
+            byte[] bytes = bs.toByteArray();
+            Intent i = new Intent(ImagesActivity.this, EditImageFunctionsActivity.class);
+            i.putExtra(ConstantManager.ARGUMENT_PUT_IMAGE_INTENT, bytes);
+            startActivity(i);
+        } else {
+            Toast.makeText(this, getString(R.string.error_get_image_sd_card), Toast.LENGTH_SHORT)
+                .show();
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.framgia.photoalbum.ui.activity;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,18 +16,24 @@ import com.framgia.photoalbum.ui.adapter.EditImageAdapter;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class EditImageFunctionsActivity extends AppCompatActivity implements
-    EditImageAdapter.ClickEvent{
+    EditImageAdapter.ClickEvent {
+    @BindView(R.id.image_edit)
+    ImageView mImageEdit;
+    @BindView(R.id.recycle_view_functions)
+    RecyclerView mFunctionsRecycleView;
     private Bitmap mImageBitmap;
-    private ImageView mImageEdit;
     private ArrayList<EditItem> mListFunctionEdit;
-    private RecyclerView mListFunctions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_image_functions);
         setTitle(R.string.activity_title_edit_image);
+        ButterKnife.bind(this);
         initViews();
         getImageBitmapEdit();
     }
@@ -41,21 +48,20 @@ public class EditImageFunctionsActivity extends AppCompatActivity implements
 
     private void initViews() {
         setActionBar();
-        mImageEdit = (ImageView) findViewById(R.id.image_edit);
-        mListFunctions = (RecyclerView) findViewById(R.id.recycle_view_functions);
         mListFunctionEdit = createListItemEdit();
         EditImageAdapter adapter = new EditImageAdapter(getApplicationContext(),
             mListFunctionEdit, this);
-        mListFunctions.setAdapter(adapter);
-        mListFunctions.setLayoutManager(new LinearLayoutManager(
+        mFunctionsRecycleView.setAdapter(adapter);
+        mFunctionsRecycleView.setLayoutManager(new LinearLayoutManager(
             getApplicationContext(),
             LinearLayoutManager.HORIZONTAL, false));
     }
 
-    public void getImageBitmapEdit(){
+    public void getImageBitmapEdit() {
         if (getIntent() == null) return;
-        mImageBitmap = (Bitmap) getIntent().getParcelableExtra(ConstantManager.ARGUMENT_PUT_IMAGE_INTENT);
-        if(mImageBitmap == null) return;
+        byte[] bytes = getIntent().getByteArrayExtra(ConstantManager.ARGUMENT_PUT_IMAGE_INTENT);
+        mImageBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        if (mImageBitmap == null) return;
         mImageEdit.setImageBitmap(mImageBitmap);
     }
 
