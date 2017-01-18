@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import com.framgia.photoalbum.R;
 import com.framgia.photoalbum.data.model.ConstantManager;
+import com.framgia.photoalbum.util.ActivityUtils;
 
 import java.io.ByteArrayOutputStream;
 
@@ -73,8 +74,9 @@ public class MainActivity extends AppCompatActivity {
         ByteArrayOutputStream bs = new ByteArrayOutputStream();
         imageBitmap.compress(Bitmap.CompressFormat.PNG, ConstantManager.QUALYTY_IMAGE, bs);
         byte[] bytes = bs.toByteArray();
-        Intent i = new Intent(getApplicationContext(), EditImageFunctionsActivity.class);
-        i.putExtra(ConstantManager.ARGUMENT_PUT_IMAGE_INTENT, bytes);
-        startActivity(i);
+        ActivityUtils.startEditActivity(
+            this,
+            EditImageFunctionsActivity.class,
+            imageBitmap);
     }
 }

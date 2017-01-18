@@ -5,6 +5,10 @@ public class ConstantManager {
     public static final int QUALYTY_IMAGE = 100;
     public static final String ARGUMENT_GET_IMAGE_BITMAP = "data";
     public static final String ARGUMENT_PUT_IMAGE_INTENT = "image";
+    public static final int SEEKBAR_SIZE_MAX = 255;
+    public static final int SEEKBAR_SIZE_MEDIUM = 127;
+    public static final int COLOR_ARGB_MAX = 255;
+    public static final int COLOR_ARGB_MIN = 0;
 
     public class FunctionTitle {
         public static final String EDIT_CROP_IMAGE = "CROP";

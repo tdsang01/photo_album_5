@@ -2,8 +2,10 @@
 <manifest package="com.framgia.photoalbum"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-feature android:name="android.hardware.camera"
-                  android:required="true" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true"/>
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
@@ -21,6 +23,7 @@
         </activity>
         <activity android:name=".ui.activity.ImagesActivity"/>
         <activity android:name=".ui.activity.EditImageFunctionsActivity"/>
+        <activity android:name=".ui.activity.EditLightImageActivity"/>
     </application>
 
 </manifest>

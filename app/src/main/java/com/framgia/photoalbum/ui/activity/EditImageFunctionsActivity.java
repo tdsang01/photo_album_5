@@ -1,7 +1,6 @@
 package com.framgia.photoalbum.ui.activity;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +12,7 @@ import com.framgia.photoalbum.R;
 import com.framgia.photoalbum.data.model.ConstantManager;
 import com.framgia.photoalbum.data.model.EditItem;
 import com.framgia.photoalbum.ui.adapter.EditImageAdapter;
+import com.framgia.photoalbum.util.ActivityUtils;
 
 import java.util.ArrayList;
 
@@ -47,7 +47,7 @@ public class EditImageFunctionsActivity extends AppCompatActivity implements
     }
 
     private void initViews() {
-        setActionBar();
+        setUpActionBar();
         mListFunctionEdit = createListItemEdit();
         EditImageAdapter adapter = new EditImageAdapter(getApplicationContext(),
             mListFunctionEdit, this);
@@ -58,14 +58,11 @@ public class EditImageFunctionsActivity extends AppCompatActivity implements
     }
 
     public void getImageBitmapEdit() {
-        if (getIntent() == null) return;
-        byte[] bytes = getIntent().getByteArrayExtra(ConstantManager.ARGUMENT_PUT_IMAGE_INTENT);
-        mImageBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-        if (mImageBitmap == null) return;
+        mImageBitmap = ActivityUtils.getBitmapFromActivity(this);
         mImageEdit.setImageBitmap(mImageBitmap);
     }
 
-    public void setActionBar() {
+    public void setUpActionBar() {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -120,7 +117,7 @@ public class EditImageFunctionsActivity extends AppCompatActivity implements
                 //TODO Crop image
                 break;
             case ConstantManager.FunctionTitle.EDIT_LIGHT_IMAGE:
-                //TODO edit light image
+                ActivityUtils.startEditActivity(this, EditLightImageActivity.class, mImageBitmap);
                 break;
             case ConstantManager.FunctionTitle.EDIT_SCALE_IMAGE:
                 //TODO edit scale image
